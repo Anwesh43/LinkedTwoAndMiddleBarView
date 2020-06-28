@@ -116,4 +116,45 @@ class TwoAndMiddleBarView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class TAMBNode(var i : Int, val state : State = State()) {
+
+        private var next : TAMBNode? = null
+        private var prev : TAMBNode? = null
+
+        init {
+            addNeighbor()
+        }
+
+        fun addNeighbor() {
+            if (i < colors.size - 1) {
+                next = TAMBNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawTAMBNode(i, state.scale, paint)
+        }
+
+        fun update(cb : (Float) -> Unit) {
+            state.update(cb)
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun  getNext(dir : Int, cb : () -> Unit) : TAMBNode {
+            var curr : TAMBNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
