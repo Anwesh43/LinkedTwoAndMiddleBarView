@@ -31,16 +31,16 @@ fun Canvas.drawTwoAndMiddleBar(scale : Float, w : Float, h : Float, paint : Pain
     val h2Bar : Float = h / h2Factor
     val wBar : Float = w / parts
     val sf : Float = scale.sinify()
-    val sf2 : Float = sf.divideScale(1, parts)
+    val sf2 : Float = sf.divideScale(1, parts + 1)
     for (j in 0..1) {
-        val sfi : Float = sf.divideScale(j * 2, parts)
+        val sfi : Float = sf.divideScale(j * 2, parts + 1)
         save()
         translate(2 * wBar * j, -h1Bar)
         drawRect(RectF(0f, 0f, wBar * sfi, h1Bar), paint)
         restore()
     }
     save()
-    translate(wBar, -h2Bar)
+    translate(wBar, 0f)
     drawRect(RectF(0f, -h2Bar * sf2, wBar, h2Bar * sf2), paint)
     restore()
 }
@@ -48,6 +48,7 @@ fun Canvas.drawTwoAndMiddleBar(scale : Float, w : Float, h : Float, paint : Pain
 fun Canvas.drawTAMBNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
+    paint.color = Color.parseColor(colors[i])
     save()
     translate(0f, h)
     drawTwoAndMiddleBar(scale, w, h, paint)
