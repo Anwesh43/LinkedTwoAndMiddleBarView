@@ -203,4 +203,13 @@ class TwoAndMiddleBarView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : TwoAndMiddleBarView {
+            val view : TwoAndMiddleBarView = TwoAndMiddleBarView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
