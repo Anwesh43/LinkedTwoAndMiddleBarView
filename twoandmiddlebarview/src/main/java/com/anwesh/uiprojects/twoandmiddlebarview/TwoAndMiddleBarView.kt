@@ -180,4 +180,27 @@ class TwoAndMiddleBarView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : TwoAndMiddleBarView) {
+
+        private val animator : Animator = Animator(view)
+        private val tamb : TwoAndMiddleBar = TwoAndMiddleBar(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            tamb.draw(canvas, paint)
+            animator.animate {
+                tamb.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            tamb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
